@@ -5,8 +5,8 @@ use db::connect_to_db;
 
 #[tokio::main]
 async fn main() {
-    let db = connect_to_db().await;
-    start_graphql_server();
-    start_grpc_server();
-    start_rest_api_server();
+    connect_to_db().await;
+    start_graphql_server().await;
+    start_grpc_server().await;
+    start_rest_api_server().await;
 }

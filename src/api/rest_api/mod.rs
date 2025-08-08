@@ -1,5 +1,5 @@
 
 
-pub fn start_rest_api_server() {
+pub async fn start_rest_api_server() {
     println!("Starting REST API server...");
 }
