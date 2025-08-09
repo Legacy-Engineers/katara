@@ -1,9 +1,8 @@
 pub mod models;
 
-use surrealdb::{Surreal, Error};
-use surrealdb::opt::auth::Root;
 use surrealdb::engine::remote::ws::{Client, Ws};
-
+use surrealdb::opt::auth::Root;
+use surrealdb::{Error, Surreal};
 
 // trait DBModel {
 //     async fn create(&self) -> Result<(), Error>;
@@ -15,11 +14,10 @@ use surrealdb::engine::remote::ws::{Client, Ws};
 pub async fn connect_to_db() -> Result<Surreal<Client>, Error> {
     println!("Attempting to connect to SurrealDB at ws://localhost:8000/rpc...");
 
-    let db = Surreal::new::<Ws>("localhost:8000").await
-        .map_err(|e| {
-            eprintln!("Failed to connect to SurrealDB: {}", e);
-            e
-        })?;
+    let db = Surreal::new::<Ws>("localhost:8000").await.map_err(|e| {
+        eprintln!("Failed to connect to SurrealDB: {}", e);
+        e
+    })?;
 
     println!("Connected to SurrealDB, attempting authentication...");
 
@@ -34,13 +32,14 @@ pub async fn connect_to_db() -> Result<Surreal<Client>, Error> {
 
     // println!("Authentication successful, selecting namespace and database...");
 
-    db.use_ns("katara").use_db("katara").await
-        .map_err(|e| {
-            eprintln!("Failed to select namespace/database: {}", e);
-            e
-        })?;
+    db.use_ns("katara").use_db("katara").await.map_err(|e| {
+        eprintln!("Failed to select namespace/database: {}", e);
+        e
+    })?;
 
-    println!("✅ Database connection successful! Connected to 'katara' namespace and database at ws://localhost:8000");
+    println!(
+        "✅ Database connection successful! Connected to 'katara' namespace and database at ws://localhost:8000"
+    );
     Ok(db)
 }
 
